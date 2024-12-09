@@ -1,0 +1,31 @@
+{% extends 'chipin/base.html' %}
+{% load static %}
+{% block title %}User Management{% endblock %}
+
+{% block content %} 
+    <h2>Welcome {{ request.user.first_name }}</h2>
+    <p>This page is for user management functions.</p>
+    <p>Your current balance is: ${{ balance }}</p>
+    <a href="{% url 'users:top_up' %}">Top Up Balance</a>
+    <br></br>
+    <a href="{% url 'chipin:home' %}">Click through to ChipIn Functions</a>
+    <h3> Your Transactoin History:</h3>
+    {% if transactions %}
+        <div>
+            <table>
+                <tr>
+                    <td>Amount </td>
+                    <td>Date </td>
+                </tr>
+                {%for transaction in transactions %}
+                <tr>
+                    <th>${{ transaction.amount }}</th>
+                    <th>{{ transaction.created_at }}</th>
+                </tr>
+                {% endfor%}
+            </table>
+        </div>
+    {% else %}
+        <p>No transaction to display.</p>
+    {% endif %}
+{% endblock %}

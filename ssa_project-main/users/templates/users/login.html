@@ -1,0 +1,26 @@
+{% extends 'chipin/base.html' %}
+{% load static %}
+{% block title %}Login - ChipIn{% endblock %}
+{% block content %}
+    <div class="login-container">
+        <form id="login-form" action="{% url 'users:login' %}" method="post" onsubmit="return executeRecaptcha();">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="hidden" name="recaptcha-token" id="recaptcha-token">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LceB3EqAAAAAO5swtJ3DA88yFsv5i4fijm6tNeX"></script>
+    <script>
+        function executeRecaptcha() {
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LceB3EqAAAAAO5swtJ3DA88yFsv5i4fijm6tNeX', { action: 'submit' }).then(function(token) {
+                    document.getElementById('recaptcha-token').value = token;
+                    document.getElementById('login-form').submit();
+                });
+            });
+            return false;  // Prevent default form submission
+        }
+    </script>
+{% endblock %}

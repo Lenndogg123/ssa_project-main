@@ -1,0 +1,12 @@
+{% extends 'chipin/base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Top up balance</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit" class="btn btn-primary">Confrim</button>
+    </form>
+    <a href="{% url 'users:user' %}" >Back to Homepage</a>
+{% endblock %}
+
